@@ -2,9 +2,10 @@ require('dotenv').config(); // Load environment variables
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2');
+const http = require('http');
 
 const app = express();
-const port = process.env.PORT || 5000; // Use env port or default to 5000
+const port = process.env.PORT || 80; // Use env port or default to 80
 
 // ✅ Middleware
 app.use(cors());
@@ -67,7 +68,17 @@ app.get('/', (req, res) => {
   res.send('✅ Backend is running!');
 });
 
-// ✅ Start Server
+// ✅ Create and Start HTTP Server
+const server = http.createServer((req, res) => {
+  res.write('A Monk in Cloud'); // Write a response to the client
+  res.end(); // End the response
+});
+
+server.listen(80, () => {
+  console.log('🚀 HTTP Server running on port 80');
+});
+
+// ✅ Start Express Server
 app.listen(port, () => {
-  console.log(`🚀 Backend running at http://localhost:${port}`);
+  console.log(`🚀 Express Backend running at http://localhost:${port}`);
 });
